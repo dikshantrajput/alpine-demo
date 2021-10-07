@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>Alpine tutorial</title>
+<style rel="text/stylesheet">
+    [x-cloak] { display: "none !important;" }
+</style>
+</head>
+
+<body>
+    <div x-data="{isOpen : false}">
+        <button @click="isOpen=!isOpen">Show/Hide</button>
+        <h1 x-show="isOpen">Alpine Tutorial</h1>
+    </div>
+
+    <div x-data="{ inputValue : '' }" >
+        <input type="text" x-model=inputValue />
+        <p x-text="inputValue"></p>
+    </div>
+
+    <div class="dropdown" style="display:flex;justify-content:space-between">
+        <span>HOME</span>
+        <div @keydown.escape.window="isOpen=false" x-data="{isOpen:false}" style="position:relative">
+            <span @click="isOpen = !isOpen">
+                USER 
+                <span x-show="isOpen">&starf;</span>
+                <span x-show="! isOpen">&star;</span>
+            </span>
+            <ul x-show="isOpen" x-transition.opacity.duration.1000ms 
+            @click.away="isOpen=false" style="position:absolute;right:0">
+                <li>Account</li>
+                <li>Settings</li>
+                <li>Logout</li>
+            </ul>
+        </div>
+    </div>
+    <div x-data="{isModalOpen:false}">
+        <button 
+            @click="
+            isModalOpen=true
+            $nextTick(()=>{
+                $refs.modalCloseRef.focus()
+            })
+            ">
+            Open Modal
+        </button>
+        <div x-show="isModalOpen" class="modal" style="position:fixed;top:0;left:25%;height:50%;width:50%;margin:0 auto;background:#efefef">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus, expedita magnam tenetur dolorem nisi perferendis vero eius fugit ducimus maiores aperiam, esse quas voluptatum quasi velit labore molestiae voluptatibus dolores dolorum repellat minus officiis ipsum! Qui reprehenderit nobis modi? Voluptas expedita dolore laboriosam sed perferendis non voluptates exercitationem, consequatur ipsum.
+            <button 
+                x-ref="modalCloseRef"
+                @click="isModalOpen=false"
+            >Close Modal</button>
+        </div>
+    </div>
+    <div x-data="{test:1}" x-effect="console.log(test)">
+        <button @click="test++">test</button>
+    </div>
+<div x-data>
+    <button @click="$refs.text.remove()">Remove Text</button>
+    <span x-ref="text">Hi , I am dikshant</span>
+</div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
